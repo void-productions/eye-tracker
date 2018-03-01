@@ -5,12 +5,13 @@
 import numpy as np
 import cv2 as cv
 
-def show_img_eyes(img):
-    face_cascade = cv.CascadeClassifier('haarcascade_frontalface_default.xml')
-    eye_cascade = cv.CascadeClassifier('haarcascade_eye.xml')
-    gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+face_cascade = cv.CascadeClassifier('haarcascade_frontalface_default.xml')
+eye_cascade = cv.CascadeClassifier('haarcascade_eye.xml')
 
+def show_img_eyes(img):
+    gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+
     for (x,y,w,h) in faces:
         cv.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
         roi_gray = gray[y:y+h, x:x+w]
@@ -19,8 +20,3 @@ def show_img_eyes(img):
         for (ex,ey,ew,eh) in eyes:
             cv.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
     cv.imshow('img',img)
-    cv.waitKey(0)
-    cv.destroyAllWindows()
-
-img = cv.imread("img.jpg") # TODO put image in here!
-show_img_eyes(img)
